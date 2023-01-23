@@ -4,10 +4,10 @@
     "description": "adds shortcuts for your tabs",
     "version": "1.0",
     "icons": {
-      "16": "",
-      "32": "",
-      "48": "",
-      "128": ""
+      "16": "img/16x 16logo.png",
+      "32": "img/32x 32logo.png",
+      "48": "img/48x 48logo.png",
+      "128": "img/128 x 128 logo.png"
     },
     "action": {
         "default_title": "ShortTab",
@@ -15,9 +15,12 @@
     },
     "content_scripts": [
     {
-        "matches": ["*"],
-        "css": ["style.css"],
-        "js": ["script.js"]
+      "matches": [
+        "*://*/*",
+        "file://*/*"
+      ],
+        "css": ["styles/style.css"],
+        "js": ["scripts/shortcut.js"]
 
     }
 ]
