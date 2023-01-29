@@ -4,9 +4,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/scripts/main.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
-    
+    <header><div><h2>Short</h2><h1>T</h1><h2>ab</h2></div></header>
+    <div class="shortcut-menu">
+
+        <div class="shortcut-input"> 
+                <div class="input-box">
+                    <input class="input-text" type="text" name="" id="nameInput" placeholder="Enter Name">
+                    <input class="input-text" type="text" name="" id="urlInput" placeholder="Enter URL">
+                </div>
+        
+                <div class="checkbox">
+                    <label>as new tap ?</label>
+                    <div>
+                        <input type="checkbox" name="as new tap ?" id="checkbox">
+                        <span class="s1"></span>
+                        <span class="s2"></span>
+                    </div>
+
+                    
+                    
+                </div>
+                <button id="recBtn">Record keybind</button>
+                
+                
+
+        </div>
+
+        <div class="shortcuts">
+            <div class="shortcut shortcut-list-header">
+                <p class="shortcut-info shortcut-name">Name</p>
+                <p class="shortcut-info shortcut-keybind">keybind</p>
+                <p class="shortcut-info hortcut-openas">Open as new tap</p>
+                <button class="delete-shortcut" style="opacity: 0; cursor: default;" disabled>Delete</button>
+            </div>  
+            <ul class="shortcut-list" id="shortcutList">
+                      
+            </ul>
+        </div>
+
+    </div>
+    <footer></footer>
 </body>
 </html>
