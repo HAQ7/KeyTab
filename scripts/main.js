@@ -4,10 +4,12 @@ const checkbox = document.getElementById("checkbox");
 const recBtn = document.getElementById("recBtn");
 const shortcutList = document.getElementById("shortcutList");
 const shortcutListHeader = document.querySelector('.shortcut-list-header');
+const root = document.querySelector(":root");
 let shortcuts = [];
 let keybinds = [];
 
 const recBtnHandler = () => {
+  changeRecStyle('#6B1C18', '#992822', 'insert keybind...');
   const recorder = (event) => {
     if (!event.repeat) {
       keybinds.push(event.key);
@@ -18,10 +20,17 @@ const recBtnHandler = () => {
   const endRecord = () => {
     document.removeEventListener("keydown", recorder);
     document.removeEventListener("keyup", endRecord);
+    changeRecStyle('#0f3157', '#438BDE', 'Record Keybind');
     createShortcut();
   };
   document.addEventListener("keyup", endRecord);
 };
+
+const changeRecStyle = (mainColor,secColor,text) => {
+  root.style.setProperty('--mainColor', mainColor);
+  root.style.setProperty('--secColor', secColor);
+  recBtn.textContent = text;
+}
 
 const createShortcut = () => {
   const shortcut = {

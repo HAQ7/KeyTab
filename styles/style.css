@@ -1,8 +1,16 @@
+:root {
+    --mainColor: #0f3157;
+    --secColor: #438BDE;
+}
+
 body { 
     width: 410px;
     background-color: hsl(0, 0%, 10%);
     margin: 0;
     font-family: 'Lato', sans-serif;
+    border: 1px solid var(--mainColor);
+    padding: 0.5em;
+    transition: 0.2s;
 }
 
 header {
@@ -13,21 +21,52 @@ header {
     align-items: center;
 }
 
-header div {
+.logo {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: hsl(212, 70%, 20%);
+    background-color: var(--mainColor);
     border-radius: 10px;
     padding: 1em;
+    transition: 0.2s;
 }
 
 header h1 {
-    color: #438BDE;
+    color: var(--secColor);
 }
 
 header h2 {
     color: hsl(0, 0%, 100%);
+}
+
+.header-corner-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: absolute;
+    top: 0;
+    left: 5px;
+    opacity: 0.5;
+    font-size: 0.65em;
+    margin: 0.5em;
+    color: hsl(0, 0%, 75%);
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.header-corner div {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    place-items: center;
+}
+
+.header-corner div * {
+    margin: 0.25em;
+}
+
+img {
+    width: 2em;
 }
 
 .shortcut-menu {
@@ -56,7 +95,7 @@ header h2 {
     margin: 0.25em;
 }
 
-.shortcut-input input:focus {
+.shortcut-input input:focus, button {
     outline: none;
 }
 
@@ -72,7 +111,7 @@ header h2 {
 .shortcut-input button {
     width: 70px;
     height: 40px;
-    background-color: hsl(212, 70%, 20%);
+    background-color: var(--mainColor);
     border: none;
     border-radius: 10px;
     font-family: 'Roboto Condensed', sans-serif;
@@ -120,7 +159,7 @@ header h2 {
 }
 
 .s1 {
-    border: 1px solid #438BDE;
+    border: 1px solid var(--secColor);
     width: 20px;
     height: 20px;
 }
@@ -129,7 +168,7 @@ header h2 {
     width: 0;
     opacity: 0;
     height: 14px;
-    background-color: #438BDE;
+    background-color: var(--secColor);
     transition: 0.2s;
 }
 

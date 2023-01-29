@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "ShortTab",
-    "description": "adds shortcuts for your tabs",
+    "description": "adds shortcuts for your tabs, and bookmarks",
     "version": "1.0",
     "icons": {
       "16": "img/16x 16logo.png",
