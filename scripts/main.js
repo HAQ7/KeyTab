@@ -3,13 +3,13 @@ const urlInput = document.getElementById("urlInput");
 const checkbox = document.getElementById("checkbox");
 const recBtn = document.getElementById("recBtn");
 const shortcutList = document.getElementById("shortcutList");
-const shortcutListHeader = document.querySelector('.shortcut-list-header');
+const shortcutListHeader = document.querySelector(".shortcut-list-header");
 const root = document.querySelector(":root");
 let shortcuts = [];
 let keybinds = [];
 
 const recBtnHandler = () => {
-  changeRecStyle('#6B1C18', '#992822', 'insert keybind...');
+  changeRecStyle("#6B1C18", "#992822", "insert keybind...");
   const recorder = (event) => {
     if (!event.repeat) {
       keybinds.push(event.key);
@@ -20,17 +20,17 @@ const recBtnHandler = () => {
   const endRecord = () => {
     document.removeEventListener("keydown", recorder);
     document.removeEventListener("keyup", endRecord);
-    changeRecStyle('#0f3157', '#438BDE', 'Record Keybind');
+    changeRecStyle("#0f3157", "#438BDE", "Record Keybind");
     createShortcut();
   };
   document.addEventListener("keyup", endRecord);
 };
 
-const changeRecStyle = (mainColor,secColor,text) => {
-  root.style.setProperty('--mainColor', mainColor);
-  root.style.setProperty('--secColor', secColor);
+const changeRecStyle = (mainColor, secColor, text) => {
+  root.style.setProperty("--mainColor", mainColor);
+  root.style.setProperty("--secColor", secColor);
   recBtn.textContent = text;
-}
+};
 
 const createShortcut = () => {
   const shortcut = {
@@ -88,9 +88,9 @@ const resetInput = () => {
 
 const displayCheck = () => {
   if (!shortcuts.length) {
-    shortcutListHeader.style.opacity = '0';
+    shortcutListHeader.style.opacity = "0";
   } else {
-    shortcutListHeader.style.opacity = '1';
+    shortcutListHeader.style.opacity = "1";
   }
 };
 
@@ -102,7 +102,6 @@ const setSavedShortcuts = () => {
 
 const getSavedShortcuts = () => {
   chrome.storage.local.get(["savedShortcuts"], (result) => {
-    console.log(result);
     shortcuts = [...result.savedShortcuts];
     shortcuts.forEach((shortcut) => {
       createShortcutElement(shortcut);
@@ -113,5 +112,40 @@ const getSavedShortcuts = () => {
 
 getSavedShortcuts();
 
-
 recBtn.addEventListener("click", recBtnHandler);
+
+
+// ANIMATION FOR ICONS ------------------
+
+const githubIcon = document.querySelector(".github");
+const coffeeIcon = document.querySelector(".coffee");
+
+githubIcon.addEventListener("click", () => {
+  chrome.tabs
+    .query({ active: true })
+    .then((tab) => {
+      chrome.tabs.remove(tab[0].id);
+    })
+    .then(() => {
+      chrome.tabs.create({
+        url: "https://github.com/HAQ7/ShortTap",
+      });
+    });
+});
+
+coffeeIcon.addEventListener("mouseover", () => {
+  coffeeIcon.classList.remove("coffee-animation");
+});
+
+coffeeIcon.addEventListener("mouseout", () => {
+  coffeeIcon.classList.add("coffee-animation");
+});
+
+coffeeIcon.addEventListener("click", () => {
+  chrome.tabs.create({
+    url: "https://github.com/HAQ7/ShortTap",
+  });
+});
+
+
+

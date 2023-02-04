@@ -1,8 +1,11 @@
 {
     "manifest_version": 3,
     "name": "ShortTab",
-    "description": "adds shortcuts for your tabs, and bookmarks",
+    "description": "adds shortcuts for your tabs.",
     "version": "1.0",
+    "background": {
+      "service_worker": "scripts/background.js"
+    },
     "icons": {
       "16": "img/16x 16logo.png",
       "32": "img/32x 32logo.png",
@@ -10,7 +13,7 @@
       "128": "img/128 x 128 logo.png"
     },
     "permissions": [
-      "storage", "tabs"
+      "storage", "tabs", "nativeMessaging"
     ],
     "action": {
         "default_title": "ShortTab",
