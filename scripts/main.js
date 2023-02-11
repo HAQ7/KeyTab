@@ -1,25 +1,39 @@
 const nameInput = document.getElementById("nameInput");
 const urlInput = document.getElementById("urlInput");
+const invalidText = document.querySelector(".invalid-text");
 const checkbox = document.getElementById("checkbox");
 const recBtn = document.getElementById("recBtn");
 const shortcutList = document.getElementById("shortcutList");
 const shortcutListHeader = document.querySelector(".shortcut-list-header");
+const githubIcon = document.querySelector(".github");
+const coffeeIcon = document.querySelector(".coffee");
+const hint = document.querySelector(".hint");
 const root = document.querySelector(":root");
+let urlValid = true;
+let hasStartedRec = false;
 let shortcuts = [];
 let keybinds = [];
 
 const recBtnHandler = () => {
+  if (hasStartedRec || !urlValid) {
+    return;
+  }
+  hasStartedRec = true;
   changeRecStyle("#6B1C18", "#992822", "insert keybind...");
-  const recorder = (event) => {
-    if (!event.repeat) {
+  const recorder = event => {
+    if (!event.repeat && event.code !== "Space") {
       keybinds.push(event.key);
     }
   };
   document.addEventListener("keydown", recorder);
 
-  const endRecord = () => {
+  const endRecord = event => {
+    if (event.key === "Enter" || event.code === "Space") {
+      return;
+    }
     document.removeEventListener("keydown", recorder);
     document.removeEventListener("keyup", endRecord);
+    hasStartedRec = false;
     changeRecStyle("#0f3157", "#438BDE", "Record Keybind");
     createShortcut();
   };
@@ -47,7 +61,7 @@ const createShortcut = () => {
   resetInput();
 };
 
-const createShortcutElement = (shortcut) => {
+const createShortcutElement = shortcut => {
   const shortcutElement = document.createElement("li");
   shortcutElement.id = `${shortcut.id}`;
   shortcutElement.className = "shortcut";
@@ -64,7 +78,7 @@ const createShortcutElement = (shortcut) => {
   deleteBtn.addEventListener("click", deleteShortcut.bind(null, shortcut.id));
 };
 
-const deleteShortcut = (shortcutId) => {
+const deleteShortcut = shortcutId => {
   for (let i in shortcuts) {
     if (shortcuts[i].id === shortcutId) {
       shortcuts.splice(i, 1);
@@ -76,7 +90,7 @@ const deleteShortcut = (shortcutId) => {
   deleteShortcutElement(shortcutId);
 };
 
-const deleteShortcutElement = (shortcutId) => {
+const deleteShortcutElement = shortcutId => {
   document.getElementById(`${shortcutId}`).remove();
 };
 
@@ -101,36 +115,54 @@ const setSavedShortcuts = () => {
 };
 
 const getSavedShortcuts = () => {
-  chrome.storage.local.get(["savedShortcuts"], (result) => {
-    shortcuts = [...result.savedShortcuts];
-    shortcuts.forEach((shortcut) => {
-      createShortcutElement(shortcut);
-    });
+  chrome.storage.local.get(["savedShortcuts"], result => {
+    if (result.savedShortcuts !== 0) {
+      shortcuts = [...result.savedShortcuts];
+      shortcuts.forEach(shortcut => {
+        createShortcutElement(shortcut);
+      });
+    }
     displayCheck();
   });
 };
 
+const checkPage = () => {
+  chrome.tabs.query({active: true}).then(tab => {
+    if (tab[0].url.includes("chrome://")) {
+      hint.style = "display: block;"
+    }
+  })
+}
+
+checkPage();
 getSavedShortcuts();
 
 recBtn.addEventListener("click", recBtnHandler);
 
+// url validate ----------------------------------------------------------
 
-// ANIMATION FOR ICONS ------------------
+urlInput.addEventListener("blur", () => {
+  if (
+    urlInput.value.includes("https://") ||
+    urlInput.value.includes("http://") ||
+    urlInput.value.includes("file://")
+  ) {
+    urlValid = true;
+    urlInput.classList.remove("invalid");
+    invalidText.style = "opacity: 0;"
+  } else {
+    urlValid = false;
+    urlInput.classList.add("invalid");
+    invalidText.style = "opacity: 1;"
+  }
+});
 
-const githubIcon = document.querySelector(".github");
-const coffeeIcon = document.querySelector(".coffee");
+// ANIMATION and LINKS FOR ICONS ------------------
 
 githubIcon.addEventListener("click", () => {
-  chrome.tabs
-    .query({ active: true })
-    .then((tab) => {
-      chrome.tabs.remove(tab[0].id);
-    })
-    .then(() => {
-      chrome.tabs.create({
-        url: "https://github.com/HAQ7/ShortTap",
-      });
-    });
+  chrome.tabs.create({
+    url: "https://github.com/HAQ7/ShortTap",
+  });
 });
 
 coffeeIcon.addEventListener("mouseover", () => {
@@ -143,9 +175,6 @@ coffeeIcon.addEventListener("mouseout", () => {
 
 coffeeIcon.addEventListener("click", () => {
   chrome.tabs.create({
-    url: "https://github.com/HAQ7/ShortTap",
+    url: "https://www.buymeacoffee.com/HAQ7",
   });
 });
-
-
-

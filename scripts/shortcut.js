@@ -2,7 +2,7 @@ let shortcuts = [];
 let keybinds = [];
 
 const getSavedShortcuts = () => {
-  chrome.storage.local.get(["savedShortcuts"], (result) => {
+  chrome.storage.local.get(["savedShortcuts"], result => {
     shortcuts = [...result.savedShortcuts];
   });
 };
@@ -11,14 +11,14 @@ getSavedShortcuts();
 
 chrome.storage.onChanged.addListener(getSavedShortcuts);
 
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", event => {
   if (!event.repeat) {
     keybinds.push(event.key);
 
-    shortcuts.forEach((shortcut) => {
+    shortcuts.forEach(shortcut => {
       if (keybinds.length === shortcut.keybind.length) {
         let numOfTrue = 0;
-        keybinds.forEach((keybind) => {
+        keybinds.forEach(keybind => {
           if (shortcut.keybind.includes(keybind, numOfTrue)) {
             numOfTrue++;
           }
@@ -34,7 +34,6 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-document.addEventListener("keyup", (event) => {
+document.addEventListener("keyup", () => {
   keybinds = [];
 });
-

@@ -3,16 +3,30 @@
 :root {
     --mainColor: #0f3157;
     --secColor: #438BDE;
+    --mainFont: 'Roboto Condensed', sans-serif;
+    --secFont: 'Lato', sans-serif;
+    font-size: 16px;
+}
+
+button {
+    outline: none;
 }
 
 body { 
     width: 410px;
     background-color: hsl(0, 0%, 10%);
     margin: 0;
-    font-family: 'Lato', sans-serif;
     border: 1px solid var(--mainColor);
     padding: 0.5em;
-    transition: 0.2s;
+}
+
+body, button {
+    font-family: var(--mainFont);
+    color: white;
+}
+
+:focus {
+    outline: 1px solid var(--secColor);
 }
 
 /* header -------------------------- */
@@ -30,6 +44,7 @@ header {
     justify-content: center;
     align-items: center;
     background-color: var(--mainColor);
+    font-family: var(--secFont);
     border-radius: 10px;
     padding: 1em;
     transition: 0.2s;
@@ -39,9 +54,6 @@ header h1 {
     color: var(--secColor);
 }
 
-header h2 {
-    color: hsl(0, 0%, 100%);
-}
 
 .header-corner-left {
     display: flex;
@@ -53,8 +65,6 @@ header h2 {
     left: 5px;
     font-size: 1em;
     margin: 0.5em;
-    color: hsl(0, 0%, 100%);
-    font-family: 'Roboto Condensed', sans-serif;
 }
 
 .header-corner-left div {
@@ -70,7 +80,6 @@ header h2 {
     margin: 0;
     color: hsl(0, 0%, 75%);
     font-size: 0.65em;
-    font-family: 'Roboto Condensed', sans-serif;
     margin: 0.5em;
     cursor: default;
 }
@@ -139,23 +148,37 @@ img:hover {
 
 }
 
+/* Hint ----------------------------------------------- */
+
+.hint {
+    font-size: 1.25em;
+    background-color: hsl(0, 0%, 15%);
+    border-radius: 10px;
+    padding: 0.5em;
+    color: hsl(0, 0%, 100%);
+    display: none;
+}
+
 
 /* form --------------------------------------------- */
 
 .shortcut-menu {
-    margin-top: 5em;
+    margin-top: 3em;
     display: grid;
     place-items: center;
+    padding: auto;
 }
 
 .shortcut-input {
     display: grid;
     grid-template-columns: auto auto ;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
     place-items: center;
     background-color: hsl(0, 0%, 12%);
     border-radius: 10px;
     padding: 0.5em;
+    width: auto;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
 }
 
 .input-text {
@@ -168,8 +191,8 @@ img:hover {
     margin: 0.25em;
 }
 
-.shortcut-input input:focus, button {
-    outline: none;
+.shortcut-input input:focus{
+    outline: 1px solid var(--secColor);
 }
 
 .input-box {
@@ -187,8 +210,6 @@ img:hover {
     background-color: var(--mainColor);
     border: none;
     border-radius: 10px;
-    font-family: 'Roboto Condensed', sans-serif;
-    color: white;
     grid-row-start: 2;
     grid-row-end: 3;
     grid-column-start: 2;
@@ -205,7 +226,6 @@ img:hover {
     grid-column-start: 1;
     grid-column-end: 2;
     font-family: 'Roboto Condensed', sans-serif;
-    color: white;
     padding: 1em;
 }
 
@@ -231,27 +251,64 @@ img:hover {
     margin: 0;
 }
 
-.s1 {
+.circle-border {
     border: 1px solid var(--secColor);
     width: 20px;
     height: 20px;
 }
 
-.s2 {
+.circle-inner {
     width: 0;
     opacity: 0;
-    height: 14px;
+    height: 0;
     background-color: var(--secColor);
     transition: 0.2s;
 }
 
-.checkbox input:checked ~ .s2{
+.checkbox input:checked ~ .circle-inner{
     width: 14px;
+    height: 14px;
     opacity: 1;
+}
+
+.checkbox input:focus ~ .circle-border {
+    border-color: var(--mainColor);
 }
 
 .checkbox * {
     margin: 0.25em;
+}
+
+.invalid {
+    border: #992822 1px solid;
+    animation: angryShake 0.5s;
+}
+
+.invalid-text {
+    opacity: 0;
+    position: absolute;
+    transform: translate(-50px,40px);
+    color: #992822;
+}
+
+@keyframes angryShake {
+    20% {
+        transform: translateX(-10px);
+    }
+    40% {
+        transform: translateX(10px);
+    }
+    60% {
+        transform: translateX(-10px);
+    }
+
+    80% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 }
 
 /* list ---------------------------------------------- */
@@ -271,15 +328,13 @@ img:hover {
 .shortcut {
     position: relative;
     display: flex;
-    color: white;
-    font-family: 'Roboto Condensed', sans-serif;
     padding: 0;
     margin: 0.5em 0;
     transition: 0.2s;
 }
 
 .shortcut.shortcut-list-header {
-    margin-top: 10px;
+    margin-top: 1.25em;
     background-color: hsl(0, 0%, 10%);
     width: 390px;
     opacity: 0;
@@ -299,12 +354,9 @@ img:hover {
     background-color: hsl(0, 71%, 20%);
     border: none;
     border-radius: 10px;
-    font-family: 'Roboto Condensed', sans-serif;
-    color: white;
-    font-size: 1em;
     cursor: pointer;
     transition: 0.2s;
-    margin: 0.25em;
+    margin-right: 0.25em;
 }
 
 button:hover {
@@ -321,4 +373,14 @@ button:hover {
 
 .shortcut-info.shortcut-openas {
     width: 100px;
+}
+
+/* list scroll ------------------------------*/
+
+::-webkit-scrollbar {
+    background-color: hsl(0, 0%, 15%);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: hsl(0, 0%, 20%);
 }

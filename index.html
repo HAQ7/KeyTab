@@ -1,75 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"
+      rel="stylesheet"
+    />
     <script src="/scripts/main.js" defer></script>
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="logo"><h2>Short</h2><h1>T</h1><h2>ab</h2></div>
-        <div class="header-corner-left">
-            
-
-            <div>
-                <img class="github" src="img\github-repo-git-octocat-svgrepo-com.svg" alt="">
-                <img class="coffee coffee-animation" src="img\buymeacoffee-svgrepo-com.svg" alt="">
-                <p class="github-text">github</p>
-                <p class="coffee-text">buy me a coffee !</p>
-
-            </div>
-            
+      <div class="logo">
+        <h2>Short</h2>
+        <h1>T</h1>
+        <h2>ab</h2>
+      </div>
+      <div class="header-corner-left">
+        <div>
+          <img
+            class="github"
+            src="img\github-repo-git-octocat-svgrepo-com.svg"
+            alt=""
+          />
+          <img
+            class="coffee coffee-animation"
+            src="img\buymeacoffee-svgrepo-com.svg"
+            alt=""
+          />
+          <p class="github-text">github</p>
+          <p class="coffee-text">buy me a coffee !</p>
         </div>
-        <p class="dev">made by: Hussam Qannam (HAQ7)</p>
-        
+      </div>
+      <p class="dev">made by: Hussam Qannam (HAQ7)</p>
     </header>
     <div class="shortcut-menu">
-
-        <div class="shortcut-input"> 
-                <div class="input-box">
-                    <input class="input-text" type="text" name="" id="nameInput" placeholder="Enter Name">
-                    <input class="input-text" type="text" name="" id="urlInput" placeholder="Enter URL">
-                </div>
-        
-                <div class="checkbox">
-                    <label>as new tap ?</label>
-                    <div>
-                        <input type="checkbox" name="as new tap ?" id="checkbox">
-                        <span class="s1"></span>
-                        <span class="s2"></span>
-                    </div>
-
-                    
-                    
-                </div>
-                <button id="recBtn">Record keybind</button>
-                
-                
-
+      <h1 class="hint">chrome will not allow shortcuts to work on this page !</h1>
+      <div class="shortcut-input">
+        <div class="input-box">
+          <input
+            class="input-text"
+            type="text"
+            name=""
+            id="nameInput"
+            placeholder="Enter Name"
+          />
+          <input
+            class="input-text"
+            type="text"
+            name=""
+            id="urlInput"
+            placeholder="Enter URL"
+          />
+          <p class="invalid-text">Invalid URL</p>
         </div>
 
-        <div class="shortcuts">
-            <div class="shortcut shortcut-list-header">
-                <p class="shortcut-info shortcut-name">Name</p>
-                <p class="shortcut-info shortcut-keybind">keybind</p>
-                <p class="shortcut-info hortcut-openas">Open as new tap</p>
-                <button class="delete-shortcut" style="opacity: 0; cursor: default;" disabled>Delete</button>
-            </div>  
-            <ul class="shortcut-list" id="shortcutList">
-                      
-            </ul>
+        <div class="checkbox">
+          <label>as new tap ?</label>
+          <div>
+            <input type="checkbox" name="as new tap ?" id="checkbox" />
+            <span class="circle-border"></span>
+            <span class="circle-inner"></span>
+          </div>
         </div>
+        <button id="recBtn">Record keybind</button>
 
+        <!-- <div class="hint-view">?</div>
+
+        <div class="hint">
+          <p>
+            note that the shortcut wont work on chrome pages like new tap and
+            settings. if you want you could change the defult page to be
+            google.com, then the shortcut will work on that page.
+          </p>
+        </div> -->
+      </div>
+
+      <div class="shortcuts">
+        <div class="shortcut shortcut-list-header">
+          <p class="shortcut-info shortcut-name">Name</p>
+          <p class="shortcut-info shortcut-keybind">keybind</p>
+          <p class="shortcut-info hortcut-openas">Open as new tap</p>
+          <button
+            class="delete-shortcut"
+            style="opacity: 0; cursor: default"
+            disabled
+          >
+            Delete
+          </button>
+        </div>
+        <ul class="shortcut-list" id="shortcutList"></ul>
+      </div>
     </div>
     <footer></footer>
-</body>
+  </body>
 </html>
