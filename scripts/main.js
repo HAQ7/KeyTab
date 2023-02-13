@@ -9,14 +9,68 @@ const githubIcon = document.querySelector(".github");
 const coffeeIcon = document.querySelector(".coffee");
 const hint = document.querySelector(".hint");
 const root = document.querySelector(":root");
-let urlValid = true;
+let isValid = false;
 let hasStartedRec = false;
 let shortcuts = [];
 let keybinds = [];
 
+// url and shortcut validate ----------------------------------------------------------
+
+
+
+const urlValidate = () => {
+  if (
+    urlInput.value.includes("https://") ||
+    urlInput.value.includes("http://") ||
+    urlInput.value.includes("file://")
+  ) {
+    errorTrigger("Invalid URL","off");
+    urlInput.style = "border: none";
+  } else {
+    errorTrigger("Invalid URL","on");
+    urlInput.style = "border: #992822 1px solid;";
+  }
+}
+
+urlInput.addEventListener("blur", urlValidate);
+
+const errorTrigger = (textError, mode) => {
+  if (mode === 'on') {
+    isValid = false;
+    invalidText.classList.add("invalid");
+    invalidText.style = "opacity: 1;";
+    invalidText.textContent = textError;
+  } else {
+    isValid = true;
+    invalidText.classList.remove("invalid");
+    invalidText.style = "opacity: 0;";
+  }
+};
+
+const validateShortcut = newShortcut => {
+  for (j = 0; j < shortcuts.length; j++) {
+    numOfTrue = 0;
+    for (i = 0; i < shortcuts[j].keybind.length; i++) {
+      if (shortcuts[j].keybind[i] === newShortcut.keybind[i]) {
+        numOfTrue++;
+      }
+
+      if (numOfTrue === shortcuts[j].keybind.length) {
+        errorTrigger("Keybind already in use, try another","on");
+        return;
+      }
+    }
+  }
+  errorTrigger("","off");
+}
+
+// record -----------------------------------------------------------
+
+
 const recBtnHandler = () => {
-  if (hasStartedRec || !urlValid) {
-    return;
+  urlValidate();
+  if (hasStartedRec || !isValid) {
+    return
   }
   hasStartedRec = true;
   changeRecStyle("#6B1C18", "#992822", "insert keybind...");
@@ -54,11 +108,15 @@ const createShortcut = () => {
     keybind: keybinds,
     id: `${Math.random()}`,
   };
+  resetInput();
+  validateShortcut(shortcut)
+  if (!isValid) {
+    return
+  }
   shortcuts.push(shortcut);
   displayCheck();
   setSavedShortcuts();
   createShortcutElement(shortcut);
-  resetInput();
 };
 
 const createShortcutElement = shortcut => {
@@ -127,35 +185,18 @@ const getSavedShortcuts = () => {
 };
 
 const checkPage = () => {
-  chrome.tabs.query({active: true}).then(tab => {
+  chrome.tabs.query({ active: true }).then(tab => {
     if (tab[0].url.includes("chrome://")) {
-      hint.style = "display: block;"
+      hint.style = "display: block;";
     }
-  })
-}
+  });
+};
 
 checkPage();
 getSavedShortcuts();
 
 recBtn.addEventListener("click", recBtnHandler);
 
-// url validate ----------------------------------------------------------
-
-urlInput.addEventListener("blur", () => {
-  if (
-    urlInput.value.includes("https://") ||
-    urlInput.value.includes("http://") ||
-    urlInput.value.includes("file://")
-  ) {
-    urlValid = true;
-    urlInput.classList.remove("invalid");
-    invalidText.style = "opacity: 0;"
-  } else {
-    urlValid = false;
-    urlInput.classList.add("invalid");
-    invalidText.style = "opacity: 1;"
-  }
-});
 
 // ANIMATION and LINKS FOR ICONS ------------------
 
