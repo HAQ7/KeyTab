@@ -126,15 +126,31 @@ const createShortcutElement = shortcut => {
   shortcutElement.innerHTML = `
     <p class="shortcut-info shortcut-name">${shortcut.name}</p>
     <p class="shortcut-info shortcut-keybind">${shortcut.keybind}</p>
-    <p class="shortcut-info hortcut-openas">${
+    <p class="shortcut-info shortcut-openas">${
       shortcut.newTab ? "Yes" : "No"
     }</p>
+    <button class="change-openas">NewTab</button>
     <button class="delete-shortcut">Delete</button>
   `;
   shortcutList.append(shortcutElement);
-  const deleteBtn = shortcutElement.querySelector("button");
+  const deleteBtn = shortcutElement.querySelector(".delete-shortcut");
   deleteBtn.addEventListener("click", deleteShortcut.bind(null, shortcut.id));
+  const changeOpenasBtn = shortcutElement.querySelector("button");
+  changeOpenasBtn.addEventListener("click", changeOpenas.bind(null,shortcut.id));
 };
+
+const changeOpenas = shortcutId => {
+  for (let i in shortcuts) {
+    if (shortcuts[i].id === shortcutId) {
+      shortcuts[i].newTab = !shortcuts[i].newTab;
+      break;
+    }
+  }
+
+  const element = document.getElementById(shortcutId).querySelector(".shortcut-openas");
+  element.textContent = element.textContent === "Yes" ? "No" : "Yes";
+  setSavedShortcuts();
+}
 
 const deleteShortcut = shortcutId => {
   for (let i in shortcuts) {
@@ -149,7 +165,7 @@ const deleteShortcut = shortcutId => {
 };
 
 const deleteShortcutElement = shortcutId => {
-  document.getElementById(`${shortcutId}`).remove();
+  document.getElementById(shortcutId).remove();
 };
 
 const resetInput = () => {
