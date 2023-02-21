@@ -198,14 +198,13 @@ const displayCheck = () => {
 };
 
 const setSavedShortcuts = () => {
-  chrome.storage.local.set({ savedShortcuts: shortcuts }, () => {
-    console.log(`saved`);
-  });
+  chrome.storage.local.set({ savedShortcuts: shortcuts });
 };
 
 const getSavedShortcuts = () => {
   chrome.storage.local.get(["savedShortcuts"], result => {
-    if (result.savedShortcuts !== 0) {
+    console.log(result.savedShortcuts)
+    if (result.savedShortcuts) {
       shortcuts = [...result.savedShortcuts];
       shortcuts.forEach(shortcut => {
         createShortcutElement(shortcut);
