@@ -13,7 +13,15 @@ chrome.storage.onChanged.addListener(getSavedShortcuts);
 
 document.addEventListener("keydown", event => {
   if (!event.repeat) {
-    keybinds.push(event.key);
+    let pressedKey = event.code;
+      if (event.code.includes("Key")) {
+        pressedKey = event.code.slice(3)
+      } else if (event.code.includes("Alt")) {
+        pressedKey = event.code.slice(0,3);
+      } else if (event.code.includes("Shift")) {
+        pressedKey = event.code.slice(0,5);
+      }
+    keybinds.push(pressedKey);
 
     shortcuts.forEach(shortcut => {
       if (keybinds.length === shortcut.keybind.length) {

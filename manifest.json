@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "ShortTab",
-    "description": "adds shortcuts for your tabs.",
+    "name": "KeyTab",
+    "description": "adds keybinds for your tabs.",
     "version": "1.0",
     "background": {
       "service_worker": "scripts/background.js"
@@ -16,7 +16,7 @@
       "storage", "tabs"
     ],
     "action": {
-        "default_title": "ShortTab",
+        "default_title": "KeyTab",
         "default_popup": "index.html"
     },
     "content_scripts": [

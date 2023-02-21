@@ -48,6 +48,10 @@ const errorTrigger = (textError, mode) => {
 };
 
 const validateShortcut = newShortcut => {
+  if (newShortcut.keybind[0] !== "Shift" && newShortcut.keybind[0] !== "Alt") {
+    errorTrigger("Must start with SHIFT or ALT","on");
+    return;
+  }
   for (j = 0; j < shortcuts.length; j++) {
     numOfTrue = 0;
     for (i = 0; i < shortcuts[j].keybind.length; i++) {
@@ -73,21 +77,31 @@ const recBtnHandler = () => {
     return
   }
   hasStartedRec = true;
+  checkPage();
   changeRecStyle("#6B1C18", "#992822", "insert keybind...");
   const recorder = event => {
-    if (!event.repeat && event.code !== "Space") {
-      keybinds.push(event.key);
+    if (!event.repeat && event.code !== "Space" && event.code !== "Enter") {
+      let pressedKey = event.code;
+      if (event.code.includes("Key")) {
+        pressedKey = event.code.slice(3)
+      } else if (event.code.includes("Alt")) {
+        pressedKey = event.code.slice(0,3);
+      } else if (event.code.includes("Shift")) {
+        pressedKey = event.code.slice(0,5);
+      }
+      keybinds.push(pressedKey);
     }
   };
   document.addEventListener("keydown", recorder);
 
   const endRecord = event => {
-    if (event.key === "Enter" || event.code === "Space") {
+    if (event.code === "Enter" || event.code === "Space") {
       return;
     }
     document.removeEventListener("keydown", recorder);
     document.removeEventListener("keyup", endRecord);
     hasStartedRec = false;
+    checkPage();
     changeRecStyle("#0f3157", "#438BDE", "Record Keybind");
     createShortcut();
   };
@@ -101,6 +115,7 @@ const changeRecStyle = (mainColor, secColor, text) => {
 };
 
 const createShortcut = () => {
+  console.log(keybinds)
   const shortcut = {
     name: nameInput.value,
     url: urlInput.value,
@@ -109,7 +124,7 @@ const createShortcut = () => {
     id: `${Math.random()}`,
   };
   resetInput();
-  validateShortcut(shortcut)
+  validateShortcut(shortcut);
   if (!isValid) {
     return
   }
@@ -201,11 +216,18 @@ const getSavedShortcuts = () => {
 };
 
 const checkPage = () => {
-  chrome.tabs.query({ active: true }).then(tab => {
-    if (tab[0].url.includes("chrome://")) {
-      hint.style = "display: block;";
-    }
-  });
+  if(hasStartedRec) {
+    hint.style = "display: block;";
+    hint.textContent = "note that the Keybind must start with ALT or SHIFT";
+  } else {
+    hint.style = "display: none;"
+    chrome.tabs.query({ active: true }).then(tab => {
+      if (tab[0].url.includes("chrome://") || tab[0].url.includes("https://chrome.google.com/")) {
+        hint.style = "display: block;";
+        hint.textContent = "chrome will not allow keybinds to work on this page !";
+      }
+    });
+  }
 };
 
 checkPage();
@@ -235,3 +257,4 @@ coffeeIcon.addEventListener("click", () => {
     url: "https://www.buymeacoffee.com/HAQ7",
   });
 });
+
