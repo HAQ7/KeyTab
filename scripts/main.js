@@ -184,8 +184,8 @@ const deleteShortcutElement = shortcutId => {
 };
 
 const resetInput = () => {
-  nameInput.textContent = "";
-  urlInput.textContent = "";
+  nameInput.value = "";
+  urlInput.value = "";
   keybinds = [];
 };
 
